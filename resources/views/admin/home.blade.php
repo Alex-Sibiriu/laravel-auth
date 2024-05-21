@@ -2,18 +2,17 @@
 
 @section('content')
   <div class="container">
-    <h1>Admin Home</h1>
 
     <div class="container">
-      <h2 class="fs-4 text-secondary my-4">
+      <h2 class="text-white py-3 fw-bold">
         {{ __('Dashboard') }}
       </h2>
       <div class="row justify-content-center">
         <div class="col">
-          <div class="card">
-            <div class="card-header">{{ __('User Dashboard') }}</div>
+          <div class="card bg-black text-white border-white">
+            <div class="card-header border-white">{{ __('User Dashboard') }}</div>
 
-            <div class="card-body">
+            <div class="card-body bg-dark">
               @if (session('status'))
                 <div class="alert alert-success" role="alert">
                   {{ session('status') }}

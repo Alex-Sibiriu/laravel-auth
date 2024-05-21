@@ -1,5 +1,5 @@
-<header>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+<header class="bg-black">
+  <nav class="navbar navbar-expand-lg">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,15 +8,22 @@
       <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{{ route('home') }}" target="_blanck">Sito Pubblico</a>
+            <a class="nav-link text-white" aria-current="page" href="{{ route('home') }}" target="_blanck">Sito
+              Pubblico</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.home') }}">Home Privata</a>
+            <a class="nav-link text-white" href="{{ route('admin.home') }}">Home Privata</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{{ route('projects.index') }}">Lista Progetti</a>
           </li>
         </ul>
 
         <ul class="navbar-nav">
-          <li class="nav-item align-content-center me-3">Benvenuto <strong>{{ Auth::user()->name }}</strong></li>
+          <li class="nav-item align-content-center me-3  text-white">
+            Benvenuto <a class="text-decoration-none"
+              href="{{ url('profile') }}"><strong>{{ Auth::user()->name }}</strong></a>
+          </li>
           <li class="nav-item">
             <form action="{{ route('logout') }}" method="POST">
               @csrf
