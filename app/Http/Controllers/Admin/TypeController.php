@@ -32,13 +32,19 @@ class TypeController extends Controller
     public function store(TechnologyRequest $request)
     {
         $val_data = $request->all();
-        $val_data['slug'] = Helper::createSlug($val_data['name'], Type::class);
-        $type = new Type;
-        $type->fill($val_data);
 
-        $type->save();
+        $exists = Type::where('name', $val_data['name'])->first();
 
-        return redirect()->route('admin.technologies.index');
+        if ($exists) {
+            return redirect()->route('admin.technologies.index')->with('error', 'Il tipo ' . $val_data['name'] . ' é già presente');
+        } else {
+            $val_data['slug'] = Helper::createSlug($val_data['name'], Type::class);
+            $type = new Type;
+            $type->fill($val_data);
+            $type->save();
+
+            return redirect()->route('admin.technologies.index');
+        }
     }
 
     /**
@@ -64,15 +70,21 @@ class TypeController extends Controller
     {
         $val_data = $request->all();
 
-        if ($val_data['name'] === $type->name) {
-            $val_data['slug'] = $type->slug;
+        $exists = Type::where('name', $val_data['name'])->first();
+
+        if ($exists) {
+            return redirect()->route('admin.technologies.index')->with('error', 'Il tipo ' . $val_data['name'] . ' é già presente');
         } else {
-            $val_data['slug'] = Helper::createSlug($val_data['name'], Type::class);
+            if ($val_data['name'] === $type->name) {
+                $val_data['slug'] = $type->slug;
+            } else {
+                $val_data['slug'] = Helper::createSlug($val_data['name'], Type::class);
+            }
+
+            $type->update($val_data);
+
+            return redirect()->route('admin.technologies.index')->with('success', 'Tipo ' . $type->name . ' modificato con successo');
         }
-
-        $type->update($val_data);
-
-        return redirect()->route('admin.technologies.index')->with('success', 'Tipo ' . $type->name . ' modificato con successo');
     }
 
     /**
@@ -82,6 +94,6 @@ class TypeController extends Controller
     {
         $type->delete();
 
-        return redirect()->route('admin.technologies.index');
+        return redirect()->route('admin.technologies.index')->with('success', 'Tipo ' . $type->name . ' eliminato con successo');
     }
 }

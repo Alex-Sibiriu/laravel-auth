@@ -10,6 +10,12 @@
         </div>
       @endif
 
+      @if (session('error'))
+        <div class="alert alert-danger" role="alert">
+          <p>{{ session('error') }}</p>
+        </div>
+      @endif
+
       @if ($errors->any())
         <div class="alert alert-danger" role="alert">
           <ul>
@@ -22,6 +28,24 @@
     </div>
 
     <div class="col-4">
+      <div>
+        <div class="rounded-3 bg-dark text-white px-3 pb-3">
+          <h2 class="py-3 text-white text-center rounded-3 fw-bold fs-2 p-3 mt-3">Aggiungi una nuova tecnologia</h2>
+
+          <form action="{{ route('admin.technologies.store') }}" method="POST">
+            @csrf
+
+            <div class="mb-3">
+              <label for="name" class="form-label">Inserisci un nome*</label>
+              <input type="text" id="title" name="name" class="form-control bg-secondary-subtle"
+                value="{{ old('name') }}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Aggiungi Tecnologia</button>
+          </form>
+        </div>
+      </div>
+
       <div class="px-2 bg-dark rounded-3 pb-1">
         <h2 class="py-3 text-white rounded-3 fw-bold fs-2 p-3 mt-3">Lista Tecnologie</h2>
 
@@ -71,12 +95,14 @@
           </tbody>
         </table>
       </div>
+    </div>
 
+    <div class="col-4">
       <div>
         <div class="rounded-3 bg-dark text-white px-3 pb-3">
-          <h2 class="py-3 text-white text-center rounded-3 fw-bold fs-2 p-3 mt-3">Aggiungi una nuova tecnologia</h2>
+          <h2 class="py-3 text-white text-center rounded-3 fw-bold fs-2 p-3 mt-3">Aggiungi una nuovo tipo</h2>
 
-          <form action="{{ route('admin.technologies.store') }}" method="POST">
+          <form action="{{ route('admin.types.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -85,13 +111,11 @@
                 value="{{ old('name') }}">
             </div>
 
-            <button type="submit" class="btn btn-primary">Aggiungi Tecnologia</button>
+            <button type="submit" class="btn btn-primary">Aggiungi Tipo</button>
           </form>
         </div>
       </div>
-    </div>
 
-    <div class="col-4">
       <div class="px-2 bg-dark rounded-3 pb-1">
         <h2 class="py-3 text-white rounded-3 fw-bold fs-2 p-3 mt-3">Lista Tipi</h2>
 
@@ -140,24 +164,6 @@
 
           </tbody>
         </table>
-      </div>
-
-      <div>
-        <div class="rounded-3 bg-dark text-white px-3 pb-3">
-          <h2 class="py-3 text-white text-center rounded-3 fw-bold fs-2 p-3 mt-3">Aggiungi una nuovo tipo</h2>
-
-          <form action="{{ route('admin.types.store') }}" method="POST">
-            @csrf
-
-            <div class="mb-3">
-              <label for="name" class="form-label">Inserisci un nome*</label>
-              <input type="text" id="title" name="name" class="form-control bg-secondary-subtle"
-                value="{{ old('name') }}">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Aggiungi Tipo</button>
-          </form>
-        </div>
       </div>
     </div>
 

@@ -23,7 +23,7 @@
 
     <div class="col-8">
       <div class="px-2 bg-dark rounded-3 pb-1">
-        <h2 class="py-3 text-white rounded-3 fw-bold fs-2 p-3 mt-3">Numero Progetti: {{ $num_projects }}</h2>
+        <h2 class="py-3 text-white rounded-3 fw-bold fs-2 p-3 mt-3">Lista Progetti</h2>
 
         <table class="table table-dark table-striped">
           <thead>
@@ -78,7 +78,7 @@
     </div>
 
     <div class="col-4">
-      <div class="rounded-3 bg-dark text-white px-3 pb-3">
+      <div class="rounded-3 bg-dark text-white px-3 pb-3 position-sticky top-0 ">
         <h2 class="py-3 text-white text-center rounded-3 fw-bold fs-2 p-3 mt-3">Aggiungi un nuovo progetto</h2>
 
         <form action="{{ route('admin.projects.store') }}" method="POST">

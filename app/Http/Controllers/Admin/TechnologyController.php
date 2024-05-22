@@ -36,13 +36,20 @@ class TechnologyController extends Controller
     public function store(TechnologyRequest $request)
     {
         $val_data = $request->all();
-        $val_data['slug'] = Helper::createSlug($val_data['name'], Technology::class);
-        $technology = new Technology;
-        $technology->fill($val_data);
 
-        $technology->save();
+        $exists = Technology::where('name', $val_data['name'])->first();
 
-        return redirect()->route('admin.technologies.index');
+        if ($exists) {
+            return redirect()->route('admin.technologies.index')->with('error', 'La tecnologia ' . $val_data['name'] . ' é già presente');
+        } else {
+            $val_data['slug'] = Helper::createSlug($val_data['name'], Technology::class);
+            $technology = new Technology;
+            $technology->fill($val_data);
+
+            $technology->save();
+
+            return redirect()->route('admin.technologies.index');
+        }
     }
 
     /**
@@ -68,15 +75,22 @@ class TechnologyController extends Controller
     {
         $val_data = $request->all();
 
-        if ($val_data['name'] === $technology->name) {
-            $val_data['slug'] = $technology->slug;
+        $exists = Technology::where('name', $val_data['name'])->first();
+
+        if ($exists) {
+            return redirect()->route('admin.technologies.index')->with('error', 'La tecnologia ' . $val_data['name'] . ' é già presente');
         } else {
-            $val_data['slug'] = Helper::createSlug($val_data['name'], Technology::class);
+
+            if ($val_data['name'] === $technology->name) {
+                $val_data['slug'] = $technology->slug;
+            } else {
+                $val_data['slug'] = Helper::createSlug($val_data['name'], Technology::class);
+            }
+
+            $technology->update($val_data);
+
+            return redirect()->route('admin.technologies.index')->with('success', 'Tecnologia ' . $technology->name . ' modificata con successo');
         }
-
-        $technology->update($val_data);
-
-        return redirect()->route('admin.technologies.index')->with('success', 'Tecnologia ' . $technology->name . ' modificata con successo');
     }
 
     /**
@@ -86,6 +100,6 @@ class TechnologyController extends Controller
     {
         $technology->delete();
 
-        return redirect()->route('admin.technologies.index');
+        return redirect()->route('admin.technologies.index')->with('success', 'Tecnologia ' . $technology->name . ' eliminata con successo');
     }
 }
