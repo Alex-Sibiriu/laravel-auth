@@ -49,7 +49,8 @@
                 </form>
 
                 <td class="text-center">
-                  <button type="submit" class="btn btn-warning" onclick="sendEdit(`edit-tech-{{ $technology->id }}`)">
+                  <button type="submit" class="btn btn-warning me-2"
+                    onclick="sendEdit(`edit-tech-{{ $technology->id }}`)">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
                   <form action="{{ route('admin.technologies.destroy', $technology) }}" method="POST"
@@ -80,7 +81,8 @@
 
             <div class="mb-3">
               <label for="name" class="form-label">Inserisci un nome*</label>
-              <input type="text" id="title" name="name" class="form-control" value="{{ old('name') }}">
+              <input type="text" id="title" name="name" class="form-control bg-secondary-subtle"
+                value="{{ old('name') }}">
             </div>
 
             <button type="submit" class="btn btn-primary">Aggiungi Tecnologia</button>
@@ -117,7 +119,8 @@
                 </form>
 
                 <td class="text-center">
-                  <button type="submit" class="btn btn-warning" onclick="sendEdit(`edit-form-{{ $type->id }}`)">
+                  <button type="submit" class="btn btn-warning me-2"
+                    onclick="sendEdit(`edit-form-{{ $type->id }}`)">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
                   <form action="{{ route('admin.types.destroy', $type) }}" method="POST"
@@ -148,7 +151,8 @@
 
             <div class="mb-3">
               <label for="name" class="form-label">Inserisci un nome*</label>
-              <input type="text" id="title" name="name" class="form-control" value="{{ old('name') }}">
+              <input type="text" id="title" name="name" class="form-control bg-secondary-subtle"
+                value="{{ old('name') }}">
             </div>
 
             <button type="submit" class="btn btn-primary">Aggiungi Tipo</button>

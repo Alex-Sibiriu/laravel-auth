@@ -33,8 +33,8 @@ Route::middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home');
         Route::resource('projects', ProjectController::class)->only(['index', 'store', 'update', 'destroy']);
-        Route::resource('technologies', TechnologyController::class);
-        Route::resource('types', TypeController::class);
+        Route::resource('technologies', TechnologyController::class)->except(['show', 'create', 'edit']);
+        Route::resource('types', TypeController::class)->except(['index', 'show', 'create', 'edit']);
     });
 
 require __DIR__ . '/auth.php';

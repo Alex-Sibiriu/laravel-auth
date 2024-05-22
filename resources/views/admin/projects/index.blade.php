@@ -3,25 +3,27 @@
 @section('content')
   <div class="row pt-2 pb-5 px-5">
 
+    <div class="col-12">
+      @if (session('success'))
+        <div class="alert alert-success" role="alert">
+          <p>{{ session('success') }}</p>
+        </div>
+      @endif
+
+      @if ($errors->any())
+        <div class="alert alert-danger" role="alert">
+          <ul>
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+    </div>
+
     <div class="col-8">
       <div class="px-2 bg-dark rounded-3 pb-1">
         <h2 class="py-3 text-white rounded-3 fw-bold fs-2 p-3 mt-3">Numero Progetti: {{ $num_projects }}</h2>
-
-        @if (session('success'))
-          <div class="alert alert-success" role="alert">
-            <p>{{ session('success') }}</p>
-          </div>
-        @endif
-
-        @if ($errors->any())
-          <div class="alert alert-danger" role="alert">
-            <ul>
-              @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-          </div>
-        @endif
 
         <table class="table table-dark table-striped">
           <thead>
@@ -51,7 +53,7 @@
                 </form>
 
                 <td class="text-center">
-                  <button type="submit" class="btn btn-warning" onclick="sendEdit(`edit-form-{{ $project->id }}`)">
+                  <button type="submit" class="btn btn-warning me-2" onclick="sendEdit(`edit-form-{{ $project->id }}`)">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
 
@@ -84,17 +86,19 @@
 
           <div class="mb-3">
             <label for="title" class="form-label">Inserisci un titolo*</label>
-            <input type="text" id="title" name="title" class="form-control" value="{{ old('title') }}">
+            <input type="text" id="title" name="title" class="form-control bg-secondary-subtle"
+              value="{{ old('title') }}">
           </div>
 
           <div class="mb-3">
             <label for="link" class="form-label">Inserisci un link*</label>
-            <input type="text" id="link" name="link" class="form-control" value="{{ old('link') }}">
+            <input type="text" id="link" name="link" class="form-control bg-secondary-subtle"
+              value="{{ old('link') }}">
           </div>
 
           <div class="mb-3">
             <label for="description" class="form-label">Inserisci una descrizione</label>
-            <textarea name="description" id="description" class="form-control" rows="10">{{ old('description') }}</textarea>
+            <textarea name="description" id="description" class="form-control bg-secondary-subtle" rows="10">{{ old('description') }}</textarea>
           </div>
 
           <button type="submit" class="btn btn-primary">Crea il progetto</button>

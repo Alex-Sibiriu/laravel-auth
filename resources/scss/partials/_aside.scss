@@ -12,9 +12,14 @@ aside {
             padding: 10px 0;
             color: white;
             text-decoration: none;
+            transition: all .3s;
         }
         &:hover {
             background-color: rgba(255, 255, 255, 0.3);
+            a {
+                color: $primary;
+                font-weight: bold;
+            }
         }
     }
 }

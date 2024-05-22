@@ -3,6 +3,17 @@ body {
     overflow: hidden;
 }
 
+header {
+    .logo {
+        width: 200px;
+        img {
+            height: 40px;
+        }
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+}
 main {
     height: 100%;
     .content-section {
