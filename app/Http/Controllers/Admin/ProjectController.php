@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Functions\Helper;
 
 class ProjectController extends Controller
 {
@@ -53,9 +55,32 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $val_data = $request->validate(
+            [
+                'title' => 'required|min:3|max:100',
+                'link' => 'required|min:10',
+            ],
+            [
+                'title.required' => 'Inserire un titolo',
+                'title.min' => 'Il titolo deve contenere almeno :min caratteri',
+                'title.max' => 'Il titolo non deve contenere più di :max caratteri',
+
+                'link.required' => 'Inserire un link',
+                'link.min' => 'Il link deve contenere almeno :min caratteri'
+            ]
+        );
+
+        if ($val_data['title'] === $project->title) {
+            $val_data['slug'] = $project->slug;
+        } else {
+            $val_data['slug'] = Helper::createSlug($val_data['title'], Project::class);
+        }
+
+        $project->update($val_data);
+
+        return redirect()->route('admin.projects.index');
     }
 
     /**

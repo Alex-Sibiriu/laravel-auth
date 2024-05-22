@@ -1,0 +1,24 @@
+body {
+    height: 100vh;
+    overflow: hidden;
+}
+
+main {
+    height: 100%;
+    .content-section {
+        height: 100%;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+}
+
+.transparent-input {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    &:focus {
+        background-color: lightslategray;
+    }
+}

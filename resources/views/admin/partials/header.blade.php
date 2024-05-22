@@ -14,9 +14,6 @@
           <li class="nav-item">
             <a class="nav-link text-white" href="{{ route('admin.home') }}">Home Privata</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('projects.index') }}">Lista Progetti</a>
-          </li>
         </ul>
 
         <ul class="navbar-nav">

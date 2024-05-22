@@ -26,7 +26,14 @@
 <body class="bg-secondary">
   @include('admin.partials.header')
 
-  @yield('content')
+  <main class="d-flex">
+    @include('admin.partials.aside')
+
+    <div class="content-section">
+      @yield('content')
+    </div>
+
+  </main>
 </body>
 
 </html>
