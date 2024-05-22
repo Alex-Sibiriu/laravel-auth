@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Functions\Helper;
+use App\Http\Requests\ProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -14,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::orderByDesc('id')->get();
         $num_projects = Project::count();
 
         return view('admin.projects.index', compact('projects', 'num_projects'));
@@ -31,9 +32,16 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        //
+        $val_data = $request->all();
+        $val_data['slug'] = Helper::createSlug($val_data['title'], Project::class);
+        $project = new Project;
+        $project->fill($val_data);
+
+        $project->save();
+
+        return redirect()->route('admin.projects.index');
     }
 
     /**
@@ -55,22 +63,9 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(ProjectRequest $request, Project $project)
     {
-        $val_data = $request->validate(
-            [
-                'title' => 'required|min:3|max:100',
-                'link' => 'required|min:10',
-            ],
-            [
-                'title.required' => 'Inserire un titolo',
-                'title.min' => 'Il titolo deve contenere almeno :min caratteri',
-                'title.max' => 'Il titolo non deve contenere più di :max caratteri',
-
-                'link.required' => 'Inserire un link',
-                'link.min' => 'Il link deve contenere almeno :min caratteri'
-            ]
-        );
+        $val_data = $request->all();
 
         if ($val_data['title'] === $project->title) {
             $val_data['slug'] = $project->slug;
@@ -80,14 +75,16 @@ class ProjectController extends Controller
 
         $project->update($val_data);
 
-        return redirect()->route('admin.projects.index');
+        return redirect()->route('admin.projects.index')->with('success', 'Progetto ' . $project->title . ' modificato con successo');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Project $project)
     {
-        //
+        $project->delete();
+
+        return redirect()->route('admin.projects.index');
     }
 }
