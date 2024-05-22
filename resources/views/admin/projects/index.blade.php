@@ -4,7 +4,7 @@
   <div class="row pt-2 pb-5 px-5">
 
     <div class="col-8">
-      <div class="px-2 bg-dark rounded-3">
+      <div class="px-2 bg-dark rounded-3 pb-1">
         <h2 class="py-3 text-white rounded-3 fw-bold fs-2 p-3 mt-3">Numero Progetti: {{ $num_projects }}</h2>
 
         @if (session('success'))
@@ -54,7 +54,15 @@
                   <button type="submit" class="btn btn-warning" onclick="sendEdit(`edit-form-{{ $project->id }}`)">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
-                  @include('admin.partials.form_delete')
+
+                  <form action="{{ route('admin.projects.destroy', $project) }}" method="POST"
+                    onsubmit="return confirm('Sei sicuro di voler eliminare {{ $project->title }}?')"
+                    class="d-inline-block">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                  </form>
                 </td>
 
               </tr>
