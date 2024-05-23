@@ -24,6 +24,7 @@ class ProjectRequest extends FormRequest
         return [
             'title' => 'required|min:3|max:100',
             'link' => 'required|min:10',
+            'original_image_name' => 'max:80'
         ];
     }
 
@@ -35,7 +36,9 @@ class ProjectRequest extends FormRequest
             'title.max' => 'Il titolo non deve contenere più di :max caratteri',
 
             'link.required' => 'Inserire un link',
-            'link.min' => 'Il link deve contenere almeno :min caratteri'
+            'link.min' => 'Il link deve contenere almeno :min caratteri',
+
+            'original_image_name.max' => 'Il nome dell\'immagine non deve contenere più di :max caratteri'
         ];
     }
 }

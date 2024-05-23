@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Functions\Helper;
 use App\Http\Requests\ProjectRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -29,7 +30,7 @@ class ProjectController extends Controller
         $method = 'POST';
         $route = route('admin.projects.store');
         $project = null;
-        $title = 'Aggiungi un nuovo fumetto';
+        $title = 'Aggiungi un nuovo progetto';
 
         return view('admin.projects.create-edit', compact('method', 'route', 'project', 'title'));
     }
@@ -39,7 +40,21 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
+        // dd($request->all());
         $val_data = $request->all();
+
+        if (array_key_exists('image', $val_data)) {
+            // Salvo l'immagine nella cartella uploads
+            $image_path = Storage::put('uploads', $val_data['image']);
+            $val_data['image'] = $image_path;
+
+            // Salvo il nome dell'immagine
+            $original_name = $request->file('image')->getClientOriginalName();
+            $val_data['original_image_name'] = $original_name;
+        }
+
+
+
         $val_data['slug'] = Helper::createSlug($val_data['title'], Project::class);
         $project = new Project;
         $project->fill($val_data);
@@ -64,7 +79,7 @@ class ProjectController extends Controller
     {
         $method = 'PUT';
         $route = route('admin.projects.update', $project);
-        $title = 'Modifica il fumetto';
+        $title = 'Modifica il progetto';
 
         return view('admin.projects.create-edit', compact('project', 'method', 'route', 'title'));
     }
@@ -75,6 +90,15 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, Project $project)
     {
         $val_data = $request->all();
+
+        if (array_key_exists('image', $val_data)) {
+            // Salvo l'immagine nella cartella uploads
+            $image_path = Storage::put('uploads', $val_data['image']);
+
+            // Salvo il nome dell'immagine
+            $original_name = $request->file('image')->getClientOriginalName();
+            $val_data['original_image_name'] = $original_name;
+        }
 
         if ($val_data['title'] === $project->title) {
             $val_data['slug'] = $project->slug;
