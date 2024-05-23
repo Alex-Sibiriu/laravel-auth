@@ -48,7 +48,7 @@ class TechnologyController extends Controller
 
             $technology->save();
 
-            return redirect()->route('admin.technologies.index');
+            return redirect()->route('admin.technologies.index')->with('success', 'Tecnologia ' . $technology->name . ' aggiunta con successo');;
         }
     }
 

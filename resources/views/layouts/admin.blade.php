@@ -23,7 +23,7 @@
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-secondary">
+<body>
   @include('admin.partials.header')
 
   <main class="d-flex">

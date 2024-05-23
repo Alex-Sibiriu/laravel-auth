@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home');
-        Route::resource('projects', ProjectController::class)->only(['index', 'store', 'update', 'destroy']);
+        Route::resource('projects', ProjectController::class);
         Route::resource('technologies', TechnologyController::class)->except(['show', 'create', 'edit']);
         Route::resource('types', TypeController::class)->except(['index', 'show', 'create', 'edit']);
     });

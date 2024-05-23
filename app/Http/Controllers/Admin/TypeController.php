@@ -43,7 +43,7 @@ class TypeController extends Controller
             $type->fill($val_data);
             $type->save();
 
-            return redirect()->route('admin.technologies.index');
+            return redirect()->route('admin.technologies.index')->with('success', 'Tipo ' . $type->name . ' aggiunto con successo');;
         }
     }
 

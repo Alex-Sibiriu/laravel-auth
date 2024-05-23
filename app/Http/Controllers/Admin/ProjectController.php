@@ -26,7 +26,12 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $method = 'POST';
+        $route = route('admin.projects.store');
+        $project = null;
+        $title = 'Aggiungi un nuovo fumetto';
+
+        return view('admin.projects.create-edit', compact('method', 'route', 'project', 'title'));
     }
 
     /**
@@ -41,23 +46,27 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return redirect()->route('admin.projects.index');
+        return redirect()->route('admin.projects.show', compact('project'))->with('success', 'Progetto ' . $project->title . ' aggiunto con successo');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Project $project)
     {
-        //
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Project $project)
     {
-        //
+        $method = 'PUT';
+        $route = route('admin.projects.update', $project);
+        $title = 'Modifica il fumetto';
+
+        return view('admin.projects.create-edit', compact('project', 'method', 'route', 'title'));
     }
 
     /**
@@ -75,7 +84,7 @@ class ProjectController extends Controller
 
         $project->update($val_data);
 
-        return redirect()->route('admin.projects.index')->with('success', 'Progetto ' . $project->title . ' modificato con successo');
+        return redirect()->route('admin.projects.show', $project)->with('success', 'Progetto ' . $project->title . ' modificato con successo');
     }
 
     /**
@@ -85,6 +94,6 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect()->route('admin.projects.index');
+        return redirect()->route('admin.projects.index')->with('success', 'Progetto ' . $project->title . ' eliminato con successo');
     }
 }

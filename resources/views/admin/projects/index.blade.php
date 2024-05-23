@@ -21,7 +21,7 @@
       @endif
     </div>
 
-    <div class="col-8">
+    <div class="col-12">
       <div class="px-2 bg-dark rounded-3 pb-1">
         <h2 class="py-3 text-white rounded-3 fw-bold fs-2 p-3 mt-3">Lista Progetti</h2>
 
@@ -40,22 +40,21 @@
               <tr>
                 <td class="ps-3">{{ $project->id }}</td>
 
-                <form action="{{ route('admin.projects.update', $project) }}" method="POST"
-                  id="edit-form-{{ $project->id }}">
-                  @csrf
-                  @method('PUT')
-                  <td class="align-content-center">
-                    <input class="transparent-input" type="text" name="title" value="{{ $project->title }}">
-                  </td>
-                  <td class="align-content-center">
-                    <input class="transparent-input" type="text" name="link" value="{{ $project->link }}">
-                  </td>
-                </form>
+                <td class="align-content-center">
+                  {{ $project->title }}
+                </td>
+                <td class="align-content-center">
+                  {{ $project->link }}
+                </td>
 
                 <td class="text-center">
-                  <button type="submit" class="btn btn-warning me-2" onclick="sendEdit(`edit-form-{{ $project->id }}`)">
+                  <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-info me-2">
+                    <i class="fa-solid fa-eye"></i>
+                  </a>
+
+                  <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-warning me-2">
                     <i class="fa-solid fa-pen-to-square"></i>
-                  </button>
+                  </a>
 
                   <form action="{{ route('admin.projects.destroy', $project) }}" method="POST"
                     onsubmit="return confirm('Sei sicuro di voler eliminare {{ $project->title }}?')"
@@ -76,40 +75,5 @@
         </table>
       </div>
     </div>
-
-    <div class="col-4">
-      <div class="rounded-3 bg-dark text-white px-3 pb-3 position-sticky top-0 ">
-        <h2 class="py-3 text-white text-center rounded-3 fw-bold fs-2 p-3 mt-3">Aggiungi un nuovo progetto</h2>
-
-        <form action="{{ route('admin.projects.store') }}" method="POST">
-          @csrf
-
-          <div class="mb-3">
-            <label for="title" class="form-label">Inserisci un titolo*</label>
-            <input type="text" id="title" name="title" class="form-control bg-secondary-subtle"
-              value="{{ old('title') }}">
-          </div>
-
-          <div class="mb-3">
-            <label for="link" class="form-label">Inserisci un link*</label>
-            <input type="text" id="link" name="link" class="form-control bg-secondary-subtle"
-              value="{{ old('link') }}">
-          </div>
-
-          <div class="mb-3">
-            <label for="description" class="form-label">Inserisci una descrizione</label>
-            <textarea name="description" id="description" class="form-control bg-secondary-subtle" rows="10">{{ old('description') }}</textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Crea il progetto</button>
-        </form>
-      </div>
-    </div>
   </div>
-
-  <script>
-    function sendEdit(id) {
-      document.getElementById(id).submit();
-    }
-  </script>
 @endsection
